@@ -71,6 +71,10 @@ const getBase = (appId: string): Configuration => ({
       to: "native/",
       filter: ["index.js", "index.d.ts", "build/Release/mac_window.node", "swift-build/**"],
     },
+    {
+      from: "resources/skills",
+      to: "skills",
+    },
   ],
   mac: {
     category: "public.app-category.developer-tools",
@@ -128,6 +132,7 @@ function getConfig() {
         ...base,
         appId,
         productName: "Lensetek Dev",
+        publish: { provider: "generic", url: "https://localhost" },
         deb: { fpm: [metainfoFpm(appId)] },
         rpm: { packageName: "lensetek-dev", fpm: [metainfoFpm(appId)] },
       }

@@ -1,0 +1,20 @@
+export const BRAND = {
+  name: "Lensetek",
+  appName: "Lensetek Dev",
+  appNameProd: "Lensetek",
+  binaryName: "lensetek",
+  title: "Lensetek-OPENCODE",
+  appId: "com.lensetek.desktop.dev",
+  appIdProd: "com.lensetek.desktop",
+  appDataDir: "lensetek",
+  watermarkText: "LENSETEK-OPENCODE",
+  skillRepositories: [
+    "https://github.com/lensetek/Research-Agent-Skills-Collection",
+    "https://github.com/lensetek/Startup-Agent-Skills-Hub",
+    "https://github.com/lensetek/BrevetAB-Agent-Skills",
+    "https://github.com/lensetek/Book-Author-Agent-Skills",
+    "https://github.com/lensetek/Digital-Marketing-Agent_Skills",
+    "https://github.com/lensetek/SkillForge",
+    "https://github.com/lensetek/Fiction-book-agent-skills",
+  ],
+} as const

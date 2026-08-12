@@ -1,13 +1,30 @@
-import { existsSync, readdirSync } from "node:fs"
+import { cpSync, existsSync, readdirSync } from "node:fs"
 import { mkdir } from "node:fs/promises"
 import { join } from "node:path"
 import { app } from "electron"
+import { BRAND } from "@opencode-ai/core/branding"
 import { getStore } from "./store"
 import { FIRST_LAUNCH_ONBOARDING_COMPLETE_KEY, OLD_LAYOUT_ELIGIBLE_KEY } from "./store-keys"
 import { write as writeLog } from "./logging"
 import { hasExistingAppState } from "./install-state"
 
 const DEFAULT_PROJECT_DIR = "Default Project"
+
+export function syncBundledSkills() {
+  const resourcesSkills = join(process.resourcesPath, "skills")
+  const targetDir = process.env.APPDATA
+    ? join(process.env.APPDATA, BRAND.appDataDir, "skills")
+    : join(app.getPath("home"), ".config", "opencode", "skills")
+
+  if (existsSync(resourcesSkills) && !existsSync(targetDir)) {
+    try {
+      cpSync(resourcesSkills, targetDir, { recursive: true })
+      writeLog("onboarding", "synced bundled skills to app data dir", { targetDir })
+    } catch (err) {
+      writeLog("onboarding", "failed to sync bundled skills", { err }, "warn")
+    }
+  }
+}
 
 export function initializeOldLayoutEligibility(userDataPath: string) {
   const entries = existsSync(userDataPath) ? readdirSync(userDataPath, { withFileTypes: true }) : []

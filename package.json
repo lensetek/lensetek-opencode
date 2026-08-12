@@ -20,6 +20,15 @@
     "random": "echo 'Random script'",
     "sso": "aws sso login --sso-session=opencode --no-browser",
     "translate:app": "bun run script/translate-app.ts",
+    "sync:upstream": "bun ./scripts/sync-upstream.ts",
+    "install:skills": "bun ./scripts/install-skills.ts",
+    "build:cli": "bun run --cwd packages/opencode build",
+    "build:cli:single": "bun run --cwd packages/opencode build --single",
+    "build:desktop": "bun run --cwd packages/desktop package",
+    "build:desktop:win": "bun run --cwd packages/desktop package:win",
+    "build:desktop:mac": "bun run --cwd packages/desktop package:mac",
+    "build:desktop:linux": "bun run --cwd packages/desktop package:linux",
+    "build:all": "bun run build:cli && bun run build:desktop",
     "test": "echo 'do not run tests from root' && exit 1"
   },
   "workspaces": {

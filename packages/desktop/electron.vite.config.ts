@@ -31,8 +31,15 @@ const sentry =
       })
     : false
 
+import path from "node:path"
+
 export default defineConfig({
   main: {
+    resolve: {
+      alias: {
+        "@opencode-ai/core": path.resolve(__dirname, "../core/src"),
+      },
+    },
     define: {
       "import.meta.env.OPENCODE_CHANNEL": JSON.stringify(channel),
     },

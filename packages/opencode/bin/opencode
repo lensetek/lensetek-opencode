@@ -192,13 +192,24 @@ function findBinary(startDir) {
 }
 
 const resolved = envPath || (fs.existsSync(cached) ? cached : findBinary(scriptDir))
-if (!resolved) {
-  console.error(
-    "It seems that your package manager failed to install the right version of the opencode CLI for your platform. You can try manually installing " +
-      names.map((n) => `\"${n}\"`).join(" or ") +
-      " package",
-  )
-  process.exit(1)
+if (resolved) {
+  run(resolved)
+} else {
+  const sourceEntry = path.join(scriptDir, "..", "src", "index.ts")
+  if (fs.existsSync(sourceEntry)) {
+    const defaultBunPath = path.join(os.homedir(), ".bun", "bin", os.platform() === "win32" ? "bun.exe" : "bun")
+    const bunBin = fs.existsSync(defaultBunPath) ? defaultBunPath : "bun"
+    const packageDir = path.join(scriptDir, "..")
+    const child = childProcess.spawn(bunBin, ["run", "--cwd", packageDir, "--conditions=browser", sourceEntry, ...process.argv.slice(2)], {
+      stdio: "inherit",
+    })
+    child.on("exit", (code) => process.exit(typeof code === "number" ? code : 0))
+  } else {
+    console.error(
+      "It seems that your package manager failed to install the right version of the opencode CLI for your platform. You can try manually installing " +
+        names.map((n) => `\"${n}\"`).join(" or ") +
+        " package",
+    )
+    process.exit(1)
+  }
 }
-
-run(resolved)
