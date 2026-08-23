@@ -54,7 +54,7 @@ const scriptPath = fs.realpathSync(fileURLToPath(import.meta.url))
 const scriptDir = path.dirname(scriptPath)
 
 //
-const cached = path.join(scriptDir, ".opencode")
+const cached = [path.join(scriptDir, ".lensetek"), path.join(scriptDir, ".opencode")].find((item) => fs.existsSync(item))
 
 const platformMap = {
   darwin: "darwin",
@@ -75,8 +75,8 @@ let arch = archMap[os.arch()]
 if (!arch) {
   arch = os.arch()
 }
-const base = "opencode-" + platform + "-" + arch
-const binary = platform === "windows" ? "opencode.exe" : "opencode"
+const base = "lensetek-" + platform + "-" + arch
+const binary = platform === "windows" ? "lensetek.exe" : "lensetek"
 
 function supportsAvx2() {
   if (arch !== "x64") return false
@@ -191,7 +191,7 @@ function findBinary(startDir) {
   }
 }
 
-const resolved = envPath || (fs.existsSync(cached) ? cached : findBinary(scriptDir))
+const resolved = envPath || cached || findBinary(scriptDir)
 if (resolved) {
   run(resolved)
 } else {
@@ -206,7 +206,7 @@ if (resolved) {
     child.on("exit", (code) => process.exit(typeof code === "number" ? code : 0))
   } else {
     console.error(
-      "It seems that your package manager failed to install the right version of the opencode CLI for your platform. You can try manually installing " +
+      "It seems that your package manager failed to install the right version of the Lensetek CLI for your platform. You can try manually installing " +
         names.map((n) => `\"${n}\"`).join(" or ") +
         " package",
     )

@@ -143,7 +143,7 @@ function getConfig() {
         appId,
         productName: "Lensetek Beta",
         protocols: { name: "Lensetek Beta", schemes: ["lensetek"] },
-        publish: { provider: "github", owner: "anomalyco", repo: "opencode-beta", channel: "latest" },
+        publish: { provider: "github", owner: "lensetek", repo: "lensetek-opencode", channel: "beta" },
         deb: { fpm: [metainfoFpm(appId)] },
         rpm: { packageName: "lensetek-beta", fpm: [metainfoFpm(appId)] },
       }
@@ -154,7 +154,7 @@ function getConfig() {
         appId,
         productName: "Lensetek",
         protocols: { name: "Lensetek", schemes: ["lensetek"] },
-        publish: { provider: "github", owner: "anomalyco", repo: "opencode", channel: "latest" },
+        publish: { provider: "github", owner: "lensetek", repo: "lensetek-opencode", channel: "latest" },
         deb: { fpm: [metainfoFpm(appId), legacyDesktopEntryFpm] },
         rpm: { packageName: "lensetek", fpm: [metainfoFpm(appId), legacyDesktopEntryFpm] },
       }
