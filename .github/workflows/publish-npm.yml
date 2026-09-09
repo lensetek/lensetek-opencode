@@ -3,6 +3,7 @@ name: publish-npm
 on:
   release:
     types: [released]
+  workflow_dispatch:
 
 concurrency:
   group: publish-npm
@@ -25,13 +26,23 @@ jobs:
       - name: Install workspace dependencies
         run: bun install --frozen-lockfile
 
+      - name: Resolve version
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          tag="${{ github.event.release.tag_name }}"
+          if [ -z "$tag" ]; then
+            tag="$(gh release view --repo "$GITHUB_REPOSITORY" --json tagName --jq .tagName)"
+          fi
+          echo "OPENCODE_VERSION=${tag#v}" >> "$GITHUB_ENV"
+
       - name: Build release binaries
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           GH_REPO: ${{ github.repository }}
           OPENCODE_RELEASE: "true"
           OPENCODE_CHANNEL: "latest"
-          OPENCODE_VERSION: ${{ github.event.release.tag_name }}
+          OPENCODE_VERSION: ${{ env.OPENCODE_VERSION }}
         run: ./packages/opencode/script/build.ts --skip-embed-web-ui
 
       - name: Publish to npm
