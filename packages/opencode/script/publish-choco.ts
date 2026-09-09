@@ -48,8 +48,12 @@ if (/\blensetek\b[^0-9]*\b${version.replaceAll(".", "\\.")}\b/.test(`${search.st
 
 await $`choco pack ${join(packageDir, "lensetek.nuspec")}`.cwd(packageDir)
 
+const pushArgs = [join(packageDir, `lensetek.${version}.nupkg`), "--source", "https://push.chocolatey.org/"]
 const apiKey = process.env.CHOCOLATEY_API_KEY
-const push = await $`choco push ${join(packageDir, `lensetek.${version}.nupkg`)} --source https://push.chocolatey.org/ ${apiKey ? `--api-key ${apiKey}` : ""}`.nothrow()
+if (apiKey) {
+  pushArgs.push("--api-key", apiKey)
+}
+const push = await $`choco push ${pushArgs}`.nothrow()
 const pushOutput = `${push.stdout}`.trim()
 if (push.exitCode !== 0) {
   throw new Error(`choco push failed with exit ${push.exitCode}: ${pushOutput || "no output"}`)
