@@ -1,0 +1,54 @@
+name: publish-choco
+
+on:
+  release:
+    types: [released]
+  workflow_dispatch:
+
+concurrency:
+  group: publish-choco
+  cancel-in-progress: false
+
+permissions:
+  contents: read
+
+jobs:
+  choco:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: oven-sh/setup-bun@v2
+        with:
+          bun-version: "^1.3.14"
+
+      - name: Check chocolatey key
+        env:
+          CHOCOLATEY_API_KEY: ${{ secrets.CHOCOLATEY_API_KEY }}
+        shell: pwsh
+        run: |
+          if ($env:CHOCOLATEY_API_KEY) {
+            Add-Content -Path $env:GITHUB_ENV -Value "HAS_CHOCO_KEY=1"
+          }
+
+      - name: Resolve version
+        if: env.HAS_CHOCO_KEY == '1'
+        shell: pwsh
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          $tag = "${{ github.event.release.tag_name }}"
+          if (-not $tag) {
+            $tag = gh release view --repo $env:GITHUB_REPOSITORY --json tagName --jq .tagName
+          }
+          $version = $tag.TrimStart('v')
+          Add-Content -Path $env:GITHUB_ENV -Value "OPENCODE_VERSION=$version"
+
+      - name: Build and push chocolatey package
+        if: env.HAS_CHOCO_KEY == '1'
+        env:
+          CHOCOLATEY_API_KEY: ${{ secrets.CHOCOLATEY_API_KEY }}
+          GH_REPO: ${{ github.repository }}
+          OPENCODE_VERSION: ${{ env.OPENCODE_VERSION }}
+        shell: pwsh
+        run: bun ./packages/opencode/script/publish-choco.ts

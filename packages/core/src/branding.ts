@@ -10,8 +10,9 @@ export const BRAND = {
   watermarkText: "LENSETEK-OPENCODE",
   npmPackage: "lensetek",
   githubRepo: "lensetek/lensetek-opencode",
-  // Distribution endpoints used by `lensetek upgrade`. Brew/choco/scoop are
-  // not published for the fork yet; those channels fail cleanly until then.
+  // Distribution endpoints used by `lensetek upgrade`. Scoop and npm are
+  // published on release; brew and choco channels fail cleanly until a
+  // lensetek/homebrew-tap repo (GH_PAT) and a chocolatey API key are set.
   installUrl: "https://raw.githubusercontent.com/lensetek/lensetek-opencode/dev/install.sh",
   brewTap: "lensetek/tap",
   brewFormula: "lensetek",

@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2015/06/nuspec.xsd">
+  <metadata>
+    <id>lensetek</id>
+    <version>$version$</version>
+    <title>Lensetek</title>
+    <authors>Lensetek</authors>
+    <owners>Lensetek</owners>
+    <projectUrl>https://github.com/lensetek/lensetek-opencode</projectUrl>
+    <licenseUrl>https://github.com/lensetek/lensetek-opencode/blob/dev/LICENSE</licenseUrl>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>AI-powered development tool - Lensetek agent toolkit CLI.</description>
+    <releaseNotes>https://github.com/lensetek/lensetek-opencode/releases/tag/v$version$</releaseNotes>
+  </metadata>
+  <files>
+    <file src="tools/**" target="tools" />
+  </files>
+</package>
