@@ -8,6 +8,15 @@ export const BRAND = {
   appIdProd: "com.lensetek.desktop",
   appDataDir: "lensetek",
   watermarkText: "LENSETEK-OPENCODE",
+  npmPackage: "lensetek",
+  githubRepo: "lensetek/lensetek-opencode",
+  // Distribution endpoints used by `lensetek upgrade`. Brew/choco/scoop are
+  // not published for the fork yet; those channels fail cleanly until then.
+  installUrl: "https://raw.githubusercontent.com/lensetek/lensetek-opencode/dev/install.sh",
+  brewTap: "lensetek/tap",
+  brewFormula: "lensetek",
+  chocoPackage: "lensetek",
+  scoopPackage: "lensetek",
   skillRepositories: [
     "https://github.com/lensetek/Research-Agent-Skills-Collection",
     "https://github.com/lensetek/Startup-Agent-Skills-Hub",
