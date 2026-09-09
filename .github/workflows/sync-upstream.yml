@@ -1,0 +1,60 @@
+name: sync-upstream
+
+on:
+  schedule:
+    - cron: "0 3 * * 1"
+  workflow_dispatch:
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: dev
+          fetch-depth: 0
+
+      - uses: oven-sh/setup-bun@v2
+
+      - name: Configure git
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+
+      - name: Sync upstream
+        run: bun ./scripts/sync-upstream.ts
+
+      - name: Detect changes
+        id: dirty
+        run: |
+          git fetch origin --prune
+          if git diff --quiet HEAD origin/dev; then
+            echo "changed=false" >> "$GITHUB_OUTPUT"
+          else
+            echo "changed=true" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Open sync PR
+        if: steps.dirty.outputs.changed == 'true'
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          branch="sync-upstream-$(date +%Y%m%d)"
+          git push --force --set-upstream origin "HEAD:$branch"
+          gh pr view "$branch" --repo "$GITHUB_REPOSITORY" >/dev/null 2>&1 || \
+            gh pr create --repo "$GITHUB_REPOSITORY" \
+              --base dev --head "$branch" \
+              --title "chore: sync upstream dev" \
+              --body "Automated sync with \`anomalyco/opencode\` via \`scripts/sync-upstream.ts\`.
+
+Fork branding files (\`branding.ts\`, TUI logos) are preserved automatically via \`.gitattributes\` (\`merge=ours\`). If the sync warns about upstream branding changes, port any new fields manually before merging.
+
+This PR is machine-generated; review and merge it on \`dev\`."
