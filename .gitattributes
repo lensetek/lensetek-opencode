@@ -8,5 +8,10 @@ packages/core/src/branding.ts merge=ours
 packages/tui/src/logo.ts merge=ours
 packages/tui/src/component/logo.tsx merge=ours
 
+# Keep these as real files (not symlinks): windows checkout fails on symlink
+# blobs whose content is mistaken for a link target.
+packages/app/src/custom-elements.d.ts merge=ours
+packages/enterprise/src/custom-elements.d.ts merge=ours
+
 # Shell scripts must stay LF so curl|bash installers work on any platform.
 *.sh text eol=lf
