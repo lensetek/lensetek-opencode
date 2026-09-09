@@ -49,7 +49,6 @@ jobs:
         if: env.HAS_NPM_TOKEN == '1'
         env:
           GH_REPO: ${{ github.repository }}
-          OPENCODE_RELEASE: "false"
           OPENCODE_CHANNEL: "latest"
           OPENCODE_VERSION: ${{ env.OPENCODE_VERSION }}
         run: ./packages/opencode/script/build.ts --skip-embed-web-ui
