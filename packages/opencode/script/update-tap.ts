@@ -1,5 +1,7 @@
 import { $ } from "bun"
+import { mkdtemp } from "node:fs/promises"
 import { join } from "node:path"
+import { tmpdir } from "node:os"
 
 const version = process.env.OPENCODE_VERSION
 const repo = process.env.GH_REPO
@@ -72,7 +74,7 @@ const formula = `class Lensetek < Formula
 end
 `
 
-const dir = (await $`mktemp -d`.text()).trim()
+const dir = await mkdtemp(join(tmpdir(), "lensetek-tap-"))
 await $`gh repo create ${tapRepo} --public --confirm`.quiet().nothrow()
 await $`git clone --depth 1 https://x-access-token:${token}@github.com/${tapRepo}.git .`.cwd(dir)
 await Bun.write(join(dir, "lensetek.rb"), formula)
