@@ -43,6 +43,15 @@ jobs:
           fi
           ./packages/opencode/script/build.ts --skip-embed-web-ui
 
+      - name: Upload SHA256 checksums
+        if: startsWith(github.ref, 'refs/tags/')
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          cd packages/opencode/dist
+          sha256sum ./lensetek-*.tar.gz ./lensetek-*.zip > SHA256SUMS.txt
+          gh release upload "$GITHUB_REF_NAME" ./SHA256SUMS.txt --repo "$GITHUB_REPOSITORY" --clobber
+
       - name: Upload build artifacts (manual test only)
         if: ${{ !startsWith(github.ref, 'refs/tags/') }}
         uses: actions/upload-artifact@v4

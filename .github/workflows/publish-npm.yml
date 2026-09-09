@@ -1,0 +1,43 @@
+name: publish-npm
+
+on:
+  release:
+    types: [released]
+
+concurrency:
+  group: publish-npm
+  cancel-in-progress: false
+
+jobs:
+  npm:
+    runs-on: ubuntu-latest
+    if: secrets.NPM_TOKEN != ''
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          fetch-tags: true
+
+      - uses: oven-sh/setup-bun@v2
+        with:
+          bun-version: "^1.3.14"
+
+      - name: Install workspace dependencies
+        run: bun install --frozen-lockfile
+
+      - name: Build release binaries
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GH_REPO: ${{ github.repository }}
+          OPENCODE_RELEASE: "true"
+          OPENCODE_CHANNEL: "latest"
+          OPENCODE_VERSION: ${{ github.event.release.tag_name }}
+        run: ./packages/opencode/script/build.ts --skip-embed-web-ui
+
+      - name: Publish to npm
+        env:
+          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+          OPENCODE_CHANNEL: "latest"
+        run: |
+          echo "//registry.npmjs.org/:_authToken=${NPM_TOKEN}" > ~/.npmrc
+          bun ./packages/opencode/script/publish-lensetek.ts

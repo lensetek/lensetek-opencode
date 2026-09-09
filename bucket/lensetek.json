@@ -1,0 +1,38 @@
+{
+  "version": "1.18.30",
+  "description": "Lensetek, the AI coding agent built for the terminal.",
+  "homepage": "https://github.com/lensetek/lensetek-opencode",
+  "license": "MIT",
+  "architecture": {
+    "64bit": {
+      "url": "https://github.com/lensetek/lensetek-opencode/releases/download/v1.18.30/lensetek-windows-x64.zip",
+      "hash": "23c6adb7c05f0c37d69f86447c213f4f043976186304da54127d77cbc3a4ecdd"
+    },
+    "arm64": {
+      "url": "https://github.com/lensetek/lensetek-opencode/releases/download/v1.18.30/lensetek-windows-arm64.zip",
+      "hash": "cad6902aafbbe879e0ec2dc2a2f77726b49777342caee17ab8e3aeb34d91904c"
+    }
+  },
+  "bin": "lensetek.exe",
+  "checkver": {
+    "github": "https://github.com/lensetek/lensetek-opencode"
+  },
+  "autoupdate": {
+    "architecture": {
+      "64bit": {
+        "url": "https://github.com/lensetek/lensetek-opencode/releases/download/v$version/lensetek-windows-x64.zip",
+        "hash": {
+          "url": "https://github.com/lensetek/lensetek-opencode/releases/download/v$version/SHA256SUMS.txt",
+          "regex": "$sha256\\s+[^ ]*\\.(zip|tar\\.gz)"
+        }
+      },
+      "arm64": {
+        "url": "https://github.com/lensetek/lensetek-opencode/releases/download/v$version/lensetek-windows-arm64.zip",
+        "hash": {
+          "url": "https://github.com/lensetek/lensetek-opencode/releases/download/v$version/SHA256SUMS.txt",
+          "regex": "$sha256\\s+[^ ]*\\.(zip|tar\\.gz)"
+        }
+      }
+    }
+  }
+}
