@@ -59,6 +59,10 @@ choco install lensetek               # Windows (Chocolatey)
 
 You can also download a binary directly from the [releases page](https://github.com/lensetek/lensetek-opencode/releases).
 
+> [!NOTE]
+> On Windows the install script runs inside Git Bash / MSYS2 / Cygwin / WSL.
+> In plain PowerShell or cmd use `npm install -g lensetek`, `scoop install lensetek`, or `choco install lensetek`.
+
 > [!TIP]
 > Remove versions older than 0.1.x before installing.
 
