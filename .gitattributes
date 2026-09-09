@@ -7,3 +7,6 @@ packages/core/src/database/migration.gen.ts linguist-generated
 packages/core/src/branding.ts merge=ours
 packages/tui/src/logo.ts merge=ours
 packages/tui/src/component/logo.tsx merge=ours
+
+# Shell scripts must stay LF so curl|bash installers work on any platform.
+*.sh text eol=lf
