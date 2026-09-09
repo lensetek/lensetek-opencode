@@ -39,11 +39,8 @@ for (const file of ["lensetek.nuspec", "tools/chocolateyinstall.ps1"]) {
   )
 }
 
-const search = await $`choco search lensetek --exact --source https://community.chocolatey.org/api/v2/`
-  .quiet()
-  .nothrow()
-  .text()
-if (/\blensetek\b[^0-9]*\b${version.replaceAll(".", "\\.")}\b/.test(search)) {
+const search = await $`choco search lensetek --exact --source https://community.chocolatey.org/api/v2/`.nothrow()
+if (/\blensetek\b[^0-9]*\b${version.replaceAll(".", "\\.")}\b/.test(`${search.stdout}`)) {
   await rm(packageDir, { recursive: true, force: true })
   console.log(`lensetek ${version} already published; skipping`)
   process.exit(0)
@@ -52,11 +49,10 @@ if (/\blensetek\b[^0-9]*\b${version.replaceAll(".", "\\.")}\b/.test(search)) {
 await $`choco pack ${join(packageDir, "lensetek.nuspec")}`.cwd(packageDir)
 
 const apiKey = process.env.CHOCOLATEY_API_KEY
-const push = await $`choco push ${join(packageDir, `lensetek.${version}.nupkg`)} --source https://push.chocolatey.org/ ${apiKey ? `--api-key ${apiKey}` : ""}`
-  .quiet()
-  .nothrow()
+const push = await $`choco push ${join(packageDir, `lensetek.${version}.nupkg`)} --source https://push.chocolatey.org/ ${apiKey ? `--api-key ${apiKey}` : ""}`.nothrow()
+const pushOutput = `${push.stdout}`.trim()
 if (push.exitCode !== 0) {
-  throw new Error(`choco push failed: ${push.stderr || push.stdout}`)
+  throw new Error(`choco push failed with exit ${push.exitCode}: ${pushOutput || "no output"}`)
 }
 
 await rm(packageDir, { recursive: true, force: true })
