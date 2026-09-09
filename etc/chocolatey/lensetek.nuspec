@@ -7,7 +7,7 @@
     <authors>Lensetek</authors>
     <owners>Lensetek</owners>
     <projectUrl>https://github.com/lensetek/lensetek-opencode</projectUrl>
-    <licenseUrl>https://github.com/lensetek/lensetek-opencode/blob/dev/LICENSE</licenseUrl>
+    <license type="expression">MIT</license>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <description>AI-powered development tool - Lensetek agent toolkit CLI.</description>
     <releaseNotes>https://github.com/lensetek/lensetek-opencode/releases/tag/v$version$</releaseNotes>
