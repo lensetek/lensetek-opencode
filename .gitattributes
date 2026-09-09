@@ -1,2 +1,9 @@
 packages/core/migration/**/snapshot.json linguist-generated
 packages/core/src/database/migration.gen.ts linguist-generated
+
+# Fork-owned branding files: during `sync:upstream` merges these always keep
+# the Lensetek version on conflict instead of upstream opencode's values.
+# The `ours` merge driver is registered by scripts/sync-upstream.ts.
+packages/core/src/branding.ts merge=ours
+packages/tui/src/logo.ts merge=ours
+packages/tui/src/component/logo.tsx merge=ours
