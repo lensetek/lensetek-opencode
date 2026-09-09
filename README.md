@@ -1,17 +1,17 @@
 <p align="center">
-  <a href="https://opencode.ai">
+  <a href="https://github.com/lensetek/lensetek-opencode">
     <picture>
       <source srcset="packages/console/app/src/asset/logo-ornate-dark.svg" media="(prefers-color-scheme: dark)">
       <source srcset="packages/console/app/src/asset/logo-ornate-light.svg" media="(prefers-color-scheme: light)">
-      <img src="packages/console/app/src/asset/logo-ornate-light.svg" alt="OpenCode logo">
+      <img src="packages/console/app/src/asset/logo-ornate-light.svg" alt="Lensetek logo">
     </picture>
   </a>
 </p>
-<p align="center">The open source AI coding agent.</p>
+<p align="center">AI-powered development tool.</p>
 <p align="center">
-  <a href="https://opencode.ai/discord"><img alt="Discord" src="https://img.shields.io/discord/1391832426048651334?style=flat-square&label=discord" /></a>
-  <a href="https://www.npmjs.com/package/opencode-ai"><img alt="npm" src="https://img.shields.io/npm/v/opencode-ai?style=flat-square" /></a>
-  <a href="https://github.com/anomalyco/opencode/actions/workflows/publish.yml"><img alt="Build status" src="https://img.shields.io/github/actions/workflow/status/anomalyco/opencode/publish.yml?style=flat-square&branch=dev" /></a>
+  <a href="https://www.npmjs.com/package/lensetek"><img alt="npm" src="https://img.shields.io/npm/v/lensetek?style=flat-square" /></a>
+  <a href="https://github.com/lensetek/lensetek-opencode/releases"><img alt="GitHub Release" src="https://img.shields.io/github/v/release/lensetek/lensetek-opencode?style=flat-square" /></a>
+  <a href="./LICENSE"><img alt="License" src="https://img.shields.io/github/license/lensetek/lensetek-opencode?style=flat-square" /></a>
 </p>
 
 <p align="center">
@@ -39,67 +39,42 @@
   <a href="README.vi.md">Tiếng Việt</a>
 </p>
 
-[![OpenCode Terminal UI](packages/web/src/assets/lander/screenshot.png)](https://opencode.ai)
+[![Lensetek Terminal UI](packages/web/src/assets/lander/screenshot.png)](https://github.com/lensetek/lensetek-opencode)
 
 ---
 
 ### Installation
 
 ```bash
-# YOLO
-curl -fsSL https://opencode.ai/install | bash
+# Install script (cross-platform, latest release)
+curl -LsS https://raw.githubusercontent.com/lensetek/lensetek-opencode/dev/install.sh | bash
 
 # Package managers
-npm i -g opencode-ai@latest        # or bun/pnpm/yarn
-scoop install opencode             # Windows
-choco install opencode             # Windows
-brew install anomalyco/tap/opencode # macOS and Linux (recommended, always up to date)
-brew install opencode              # macOS and Linux (official brew formula, updated less)
-sudo pacman -S opencode            # Arch Linux (Stable)
-paru -S opencode-bin               # Arch Linux (Latest from AUR)
-mise use -g opencode               # Any OS
-nix run nixpkgs#opencode           # or github:anomalyco/opencode for latest dev branch
+npm i -g lensetek                    # macOS, Linux, Windows
+brew install lensetek/tap/lensetek   # macOS and Linux (Homebrew)
+scoop bucket add lensetek https://github.com/lensetek/lensetek-opencode
+scoop install lensetek               # Windows (Scoop)
+choco install lensetek               # Windows (Chocolatey)
 ```
+
+You can also download a binary directly from the [releases page](https://github.com/lensetek/lensetek-opencode/releases).
 
 > [!TIP]
 > Remove versions older than 0.1.x before installing.
 
-### Desktop App (BETA)
-
-OpenCode is also available as a desktop application. Download directly from the [releases page](https://github.com/anomalyco/opencode/releases) or [opencode.ai/download](https://opencode.ai/download).
-
-| Platform              | Download                           |
-| --------------------- | ---------------------------------- |
-| macOS (Apple Silicon) | `opencode-desktop-mac-arm64.dmg`   |
-| macOS (Intel)         | `opencode-desktop-mac-x64.dmg`     |
-| Windows               | `opencode-desktop-windows-x64.exe` |
-| Linux                 | `.deb`, `.rpm`, or `.AppImage`     |
-
-```bash
-# macOS (Homebrew)
-brew install --cask opencode-desktop
-# Windows (Scoop)
-scoop bucket add extras; scoop install extras/opencode-desktop
-```
-
 #### Installation Directory
 
-The install script respects the following priority order for the installation path:
-
-1. `$OPENCODE_INSTALL_DIR` - Custom installation directory
-2. `$XDG_BIN_DIR` - XDG Base Directory Specification compliant path
-3. `$HOME/bin` - Standard user binary directory (if it exists or can be created)
-4. `$HOME/.opencode/bin` - Default fallback
+The install script puts the `lensetek` binary in `$LENSETEK_INSTALL_DIR/bin`
+(default: `$HOME/.lensetek`) and prints the PATH line you need for your shell:
 
 ```bash
 # Examples
-OPENCODE_INSTALL_DIR=/usr/local/bin curl -fsSL https://opencode.ai/install | bash
-XDG_BIN_DIR=$HOME/.local/bin curl -fsSL https://opencode.ai/install | bash
+LENSETEK_INSTALL_DIR="$HOME/bin" curl -LsS https://raw.githubusercontent.com/lensetek/lensetek-opencode/dev/install.sh | bash
 ```
 
 ### Agents
 
-OpenCode includes two built-in agents you can switch between with the `Tab` key.
+Lensetek includes two built-in agents you can switch between with the `Tab` key.
 
 - **build** - Default, full-access agent for development work
 - **plan** - Read-only agent for analysis and code exploration
@@ -110,20 +85,22 @@ OpenCode includes two built-in agents you can switch between with the `Tab` key.
 Also included is a **general** subagent for complex searches and multistep tasks.
 This is used internally and can be invoked using `@general` in messages.
 
-Learn more about [agents](https://opencode.ai/docs/agents).
-
 ### Documentation
 
-For more info on how to configure OpenCode, [**head over to our docs**](https://opencode.ai/docs).
+For more info on how to configure Lensetek and use the underlying agent
+toolkit, see the [docs](./packages/docs) and the issue/PR discussions in this
+repository.
 
 ### Contributing
 
-If you're interested in contributing to OpenCode, please read our [contributing docs](./CONTRIBUTING.md) before submitting a pull request.
+If you're interested in contributing to Lensetek, please read our [contributing docs](./CONTRIBUTING.md) before submitting a pull request.
 
-### Building on OpenCode
+### A Note from the Fork
 
-If you are working on a project that's related to OpenCode and is using "opencode" as part of its name, for example "opencode-dashboard" or "opencode-mobile", please add a note to your README to clarify that it is not built by the OpenCode team and is not affiliated with us in any way.
+Lensetek is a branded fork of [anomalyco/opencode](https://github.com/anomalyco/opencode) — the open source AI coding agent. Agent behavior, most features, and this documentation base come from the upstream project, which does great work; Lensetek adds its own distribution channels, branding, and publishing pipeline on top.
+
+If you are working on a project that's related to Lensetek and is using "lensetek" as part of its name, for example "lensetek-dashboard" or "lensetek-mobile", please add a note to your README to clarify that it is not built by the Lensetek team and is not affiliated with us in any way.
 
 ---
 
-**Join our community** [Discord](https://discord.gg/opencode) | [X.com](https://x.com/opencode)
+**Project** [lensetek/lensetek-opencode](https://github.com/lensetek/lensetek-opencode)

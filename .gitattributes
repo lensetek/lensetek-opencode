@@ -13,5 +13,8 @@ packages/tui/src/component/logo.tsx merge=ours
 packages/app/src/custom-elements.d.ts merge=ours
 packages/enterprise/src/custom-elements.d.ts merge=ours
 
+# Fork's README carries Lensetek branding and install channels.
+README.md merge=ours
+
 # Shell scripts must stay LF so curl|bash installers work on any platform.
 *.sh text eol=lf
