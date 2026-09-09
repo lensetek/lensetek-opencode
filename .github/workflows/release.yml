@@ -26,6 +26,9 @@ jobs:
         with:
           bun-version: "^1.3.14"
 
+      - name: Install workspace dependencies
+        run: bun install --frozen-lockfile
+
       - name: Build and package release binaries
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -36,7 +39,7 @@ jobs:
           export OPENCODE_CHANNEL="latest"
           if [[ "${{ github.ref_name }}" =~ ^v ]]; then
             export OPENCODE_VERSION="${GITHUB_REF_NAME#v}"
-            gh release create "$GITHUB_REF_NAME" --repo "$GITHUB_REPOSITORY" --generate-notes
+            gh release create "$GITHUB_REF_NAME" --repo "$GITHUB_REPOSITORY" --generate-notes || true
           fi
           ./packages/opencode/script/build.ts --skip-embed-web-ui
 
