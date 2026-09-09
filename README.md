@@ -47,7 +47,7 @@
 
 ```bash
 # Install script (cross-platform, latest release)
-curl -LsS https://raw.githubusercontent.com/lensetek/lensetek-opencode/dev/install.sh | bash
+curl -fsSL https://lensetek.github.io/lensetek-opencode/install.sh | bash
 
 # Package managers
 npm i -g lensetek                    # macOS, Linux, Windows
@@ -69,7 +69,7 @@ The install script puts the `lensetek` binary in `$LENSETEK_INSTALL_DIR/bin`
 
 ```bash
 # Examples
-LENSETEK_INSTALL_DIR="$HOME/bin" curl -LsS https://raw.githubusercontent.com/lensetek/lensetek-opencode/dev/install.sh | bash
+LENSETEK_INSTALL_DIR="$HOME/bin" curl -fsSL https://lensetek.github.io/lensetek-opencode/install.sh | bash
 ```
 
 ### Agents

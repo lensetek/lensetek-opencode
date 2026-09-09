@@ -13,7 +13,7 @@ export const BRAND = {
   // Distribution endpoints used by `lensetek upgrade`. Scoop and npm are
   // published on release; brew and choco channels fail cleanly until a
   // lensetek/homebrew-tap repo (GH_PAT) and a chocolatey API key are set.
-  installUrl: "https://raw.githubusercontent.com/lensetek/lensetek-opencode/dev/install.sh",
+  installUrl: "https://lensetek.github.io/lensetek-opencode/install.sh",
   brewTap: "lensetek/tap",
   brewFormula: "lensetek",
   chocoPackage: "lensetek",

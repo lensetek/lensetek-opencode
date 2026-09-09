@@ -6,7 +6,7 @@ set -euo pipefail
 # lensetek/lensetek-opencode and installs it into ~/.lensetek/bin.
 #
 # Usage:
-#   curl -fsSL https://raw.githubusercontent.com/lensetek/lensetek-opencode/dev/install.sh | bash
+#   curl -fsSL https://lensetek.github.io/lensetek-opencode/install.sh | bash
 #
 # Environment:
 #   VERSION              Pin a release version (default: latest). The leading
