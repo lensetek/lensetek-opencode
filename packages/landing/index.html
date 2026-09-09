@@ -1,0 +1,354 @@
+<!doctype html>
+<html lang="id">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Lensetek — AI-powered development tool</title>
+    <meta
+      name="description"
+      content="Lensetek adalah AI coding agent open source. Instal lewat curl, npm, Homebrew, Scoop, atau Chocolatey."
+    />
+    <link
+      rel="icon"
+      href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='22' fill='%236d5dfc'/%3E%3Ctext x='50' y='68' font-size='52' text-anchor='middle' fill='white' font-family='sans-serif' font-weight='bold'%3EL%3C/text%3E%3C/svg%3E"
+    />
+    <style>
+      :root {
+        --bg: #0b0d12;
+        --surface: #151a23;
+        --border: #262d3a;
+        --text: #e7eaf0;
+        --muted: #9aa3b2;
+        --accent: #6d5dfc;
+        --accent-2: #3ec6ff;
+        --radius: 14px;
+      }
+      * {
+        box-sizing: border-box;
+      }
+      body {
+        margin: 0;
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+        background: var(--bg);
+        color: var(--text);
+        line-height: 1.6;
+      }
+      a {
+        color: var(--accent-2);
+        text-decoration: none;
+      }
+      a:hover {
+        text-decoration: underline;
+      }
+      .wrap {
+        max-width: 960px;
+        margin: 0 auto;
+        padding: 0 24px;
+      }
+      header {
+        position: sticky;
+        top: 0;
+        z-index: 10;
+        background: rgba(11, 13, 18, 0.85);
+        backdrop-filter: blur(8px);
+        border-bottom: 1px solid var(--border);
+      }
+      nav {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        height: 60px;
+      }
+      .logo {
+        font-weight: 700;
+        font-size: 1.1rem;
+        color: var(--text);
+        display: flex;
+        align-items: center;
+        gap: 8px;
+      }
+      .logo mark {
+        background: linear-gradient(135deg, var(--accent), var(--accent-2));
+        -webkit-background-clip: text;
+        background-clip: text;
+        color: transparent;
+        font-weight: 800;
+      }
+      .logo > span {
+        background: linear-gradient(135deg, var(--accent), var(--accent-2));
+        border-radius: 8px;
+        width: 26px;
+        height: 26px;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        font-weight: 800;
+        color: #fff;
+        font-size: 0.9rem;
+      }
+      nav .links {
+        display: flex;
+        gap: 20px;
+        align-items: center;
+        font-size: 0.95rem;
+      }
+      nav .links a {
+        color: var(--muted);
+      }
+      nav .links a:hover {
+        color: var(--text);
+      }
+      .btn {
+        display: inline-block;
+        background: linear-gradient(135deg, var(--accent), var(--accent-2));
+        color: #fff;
+        font-weight: 700;
+        padding: 10px 18px;
+        border-radius: 999px;
+        border: none;
+        cursor: pointer;
+      }
+      .btn:hover {
+        filter: brightness(1.1);
+        text-decoration: none;
+      }
+      section {
+        padding: 64px 0;
+      }
+      .hero {
+        text-align: center;
+        padding-top: 96px;
+        padding-bottom: 72px;
+      }
+      .hero h1 {
+        font-size: clamp(2.2rem, 6vw, 4rem);
+        line-height: 1.1;
+        margin: 0 0 16px;
+      }
+      .hero p.lead {
+        color: var(--muted);
+        font-size: clamp(1rem, 2vw, 1.25rem);
+        max-width: 640px;
+        margin: 0 auto 32px;
+      }
+      .terminal {
+        margin: 32px auto 0;
+        max-width: 640px;
+        text-align: left;
+        background: var(--surface);
+        border: 1px solid var(--border);
+        border-radius: var(--radius);
+        padding: 16px 20px;
+        font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+        font-size: 0.85rem;
+        color: #d8dee9;
+      }
+      .terminal .bar {
+        display: flex;
+        gap: 6px;
+        margin-bottom: 12px;
+      }
+      .terminal .bar i {
+        width: 10px;
+        height: 10px;
+        border-radius: 50%;
+        display: inline-block;
+      }
+      .terminal .bar i:nth-child(1) { background: #ff5f57; }
+      .terminal .bar i:nth-child(2) { background: #febc2e; }
+      .terminal .bar i:nth-child(3) { background: #28c840; }
+      .terminal .cmd { margin: 0 0 8px; }
+      .terminal .cmd span { color: var(--accent-2); }
+      .grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+        gap: 20px;
+      }
+      .card {
+        background: var(--surface);
+        border: 1px solid var(--border);
+        border-radius: var(--radius);
+        padding: 24px;
+      }
+      .card h3 {
+        margin: 0 0 8px;
+        font-size: 1.05rem;
+      }
+      .card p {
+        margin: 0;
+        color: var(--muted);
+        font-size: 0.92rem;
+      }
+      h2.section-title {
+        font-size: clamp(1.6rem, 4vw, 2.2rem);
+        margin: 0 0 8px;
+        text-align: center;
+      }
+      .section-sub {
+        text-align: center;
+        color: var(--muted);
+        margin: 0 auto 40px;
+        max-width: 600px;
+      }
+      /* ============================================================
+         ===== ABOUT ==================================================
+         ============================================================
+         Ubah narasi, misi, dan tim di bawah ini. Bagian ini sengaja
+         dibuat sebagai paragraf sederhana supaya mudah diedit.
+         ============================================================ */
+      #about p {
+        max-width: 720px;
+        margin: 0 auto 16px;
+        color: var(--muted);
+      }
+      #about .highlight {
+        text-align: center;
+        background: var(--surface);
+        border: 1px solid var(--border);
+        border-radius: var(--radius);
+        padding: 24px;
+        max-width: 720px;
+        margin: 32px auto 0;
+        color: var(--text);
+        font-weight: 500;
+      }
+      /* ============================================================ */
+      .install-code {
+        background: var(--surface);
+        border: 1px solid var(--border);
+        border-radius: var(--radius);
+        padding: 20px 24px;
+        font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+        font-size: 0.85rem;
+        overflow-x: auto;
+      }
+      .install-code div {
+        padding: 4px 0;
+      }
+      .install-code span {
+        color: var(--muted);
+        display: inline-block;
+        min-width: 130px;
+      }
+      footer {
+        border-top: 1px solid var(--border);
+        padding: 28px 0 40px;
+        color: var(--muted);
+        font-size: 0.9rem;
+        text-align: center;
+      }
+      @media (max-width: 640px) {
+        nav .links {
+          gap: 12px;
+        }
+        section {
+          padding: 48px 0;
+        }
+        .hero {
+          padding-top: 64px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+      <nav class="wrap">
+        <a class="logo" href="#">
+          <span>L</span><mark>Lensetek</mark>
+        </a>
+        <div class="links">
+          <a href="#fitur">Fitur</a>
+          <a href="#about">About</a>
+          <a href="#install">Install</a>
+          <a class="btn" href="https://github.com/lensetek/lensetek-opencode" target="_blank" rel="noopener">GitHub</a>
+        </div>
+      </nav>
+    </header>
+
+    <main class="wrap">
+      <section class="hero">
+        <h1>AI coding agent yang berjalan di terminalmu.</h1>
+        <p class="lead">
+          Lensetek adalah alat pengembangan bertenaga AI untuk coding dan
+          otomasi — open source, ringan, dan tersedia di semua platform.
+        </p>
+        <div class="terminal">
+          <div class="bar"><i></i><i></i><i></i></div>
+          <p class="cmd"><span>$</span> curl -LsS https://raw.githubusercontent.com/lensetek/lensetek-opencode/dev/install.sh | bash</p>
+          <p class="cmd"><span>$</span> lensetek --version</p>
+        </div>
+      </section>
+
+      <section id="fitur">
+        <h2 class="section-title">Kenapa Lensetek?</h2>
+        <p class="section-sub">Di-build di atas ekosistem open source yang sudah terbukti, dengan distribusi yang rapi.</p>
+        <div class="grid">
+          <div class="card">
+            <h3>Dua agen bawaan</h3>
+            <p>Beralih antara agen <strong>build</strong> (full access) dan <strong>plan</strong> (read-only) cukup dengan tombol <kbd>Tab</kbd>.</p>
+          </div>
+          <div class="card">
+            <h3>Subagent general</h3>
+            <p>Panggil <code>@general</code> untuk pencarian &amp; tugas multistep yang kompleks di dalam sesi yang sama.</p>
+          </div>
+          <div class="card">
+            <h3>Multi-platform</h3>
+            <p>Biner native untuk macOS, Linux, dan Windows — termasuk varian musl &amp; baseline.</p>
+          </div>
+          <div class="card">
+            <h3>Semua jalur install</h3>
+            <p>Install script, npm, Homebrew, Scoop, dan Chocolatey — auto-update mengikuti rilis terbaru.</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- ===== ABOUT =================================================
+           Bagian ini mudah diedit: tulis ulang narasi #about sesuai
+           keinginanmu. Paragraf tambahan tinggal ditambah di bawah.
+           ============================================================ -->
+      <section id="about">
+        <h2 class="section-title">About Lensetek</h2>
+        <p>
+          Lensetek lahir dari kebutuhan tim pengembangan yang ingin agent AI
+          yang bisa benar-benar bekerja di dalam workflow sehari-hari: coding,
+          otomasi, riset, sampai tugas administratif — tanpa meninggalkan
+          terminal.
+        </p>
+        <p>
+          Kami mengambil fondasi open source yang sudah matang, memberi lapisan
+          distribusi yang konsisten di setiap platform, dan mengkurasi
+          kumpulan skill &amp; template agar pengguna bisa langsung produktif.
+          Proyek ini tetap terbuka: kode, rilis, dan pipeline publish-nya
+          semuanya tersedia di GitHub.
+        </p>
+        <div class="highlight">
+          Open source. Terminal-first. Siap dipakai di timmu.
+        </div>
+      </section>
+
+      <section id="install">
+        <h2 class="section-title">Install</h2>
+        <p class="section-sub">Pilih jalur yang paling nyaman. Semua mengarah ke rilis terbaru.</p>
+        <div class="install-code">
+          <div><span>curl / bash</span> curl -LsS https://raw.githubusercontent.com/lensetek/lensetek-opencode/dev/install.sh | bash</div>
+          <div><span>npm</span> npm i -g lensetek</div>
+          <div><span>Homebrew</span> brew install lensetek/tap/lensetek</div>
+          <div><span>Scoop</span> scoop bucket add lensetek https://github.com/lensetek/lensetek-opencode</div>
+          <div><span>Scoop</span> scoop install lensetek</div>
+          <div><span>Chocolatey</span> choco install lensetek</div>
+        </div>
+      </section>
+    </main>
+
+    <footer>
+      <div class="wrap">
+        <p>
+          © 2026 Lensetek ·
+          <a href="https://github.com/lensetek/lensetek-opencode" target="_blank" rel="noopener">lensetek/lensetek-opencode</a>
+          · di-fork dari
+          <a href="https://github.com/anomalyco/opencode" target="_blank" rel="noopener">anomalyco/opencode</a>
+        </p>
+      </div>
+    </footer>
+  </body>
+</html>
