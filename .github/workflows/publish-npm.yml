@@ -9,6 +9,9 @@ concurrency:
   group: publish-npm
   cancel-in-progress: false
 
+permissions:
+  contents: read
+
 jobs:
   npm:
     runs-on: ubuntu-latest
@@ -45,9 +48,8 @@ jobs:
       - name: Build release binaries
         if: env.HAS_NPM_TOKEN == '1'
         env:
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           GH_REPO: ${{ github.repository }}
-          OPENCODE_RELEASE: "true"
+          OPENCODE_RELEASE: "false"
           OPENCODE_CHANNEL: "latest"
           OPENCODE_VERSION: ${{ env.OPENCODE_VERSION }}
         run: ./packages/opencode/script/build.ts --skip-embed-web-ui
